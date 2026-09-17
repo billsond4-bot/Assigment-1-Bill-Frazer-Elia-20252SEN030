@@ -1,0 +1,5 @@
+CREATE TABLE Categories ( category_id NUMBER PRIMARY KEY, category_name VARCHAR2(50) NOT NULL UNIQUE);
+CREATE TABLE Customers ( customer_id NUMBER PRIMARY KEY, customer_name VARCHAR2(100) NOT NULL, email VARCHAR2(100) NOT NULL UNIQUE, city VARCHAR2(50) NOT NULL);
+CREATE TABLE Products ( product_id NUMBER PRIMARY KEY, product_name VARCHAR2(100) NOT NULL, category_id NUMBER NOT NULL, price NUMBER(10,2) NOT NULL CHECK(price > 0), CONSTRAINT fk_product_category FOREIGN KEY (category_id) REFERENCES Categories(category_id));
+CREATE TABLE Orders ( order_id NUMBER PRIMARY KEY, customer_id NUMBER NOT NULL, order_date DATE NOT NULL, CONSTRAINT fk_order_customer FOREIGN KEY (customer_id) REFERENCES Customers(customer_id));
+CREATE TABLE Order_Items ( order_item_id NUMBER PRIMARY KEY, order_id NUMBER NOT NULL, product_id NUMBER NOT NULL, quantity NUMBER NOT NULL CHECK(quantity > 0), CONSTRAINT fk_item_order FOREIGN KEY (order_id) REFERENCES Orders(order_id), CONSTRAINT fk_item_product FOREIGN KEY (product_id) REFERENCES Products(product_id));
