@@ -1,7 +1,7 @@
 SELECT customers.customer_name, customers.city, orders.order_id, orders.order_date FROM customers JOIN orders ON customers.customer_id = orders.customer_id;
 --Explanation: Shows order with customer name and city . I used JOIN on customer_id to connect tables. Got 15 rows.
 SELECT order_items.order_id, products.product_name, products.category, products.price, order_items.quantity FROM order_items JOIN products ON order_items.product_id = products.product_id;
---Explanation: Shows order with customer name and city. Join on customer_id.
+--Explanation: Shows product name, type, price and quality in each order.  Join on customer_id.
 SELECT customers.customer_name, orders.order_id, orders.order_date FROM customers LEFT JOIN orders ON customers.customer_id = orders.customer_id;
 --Explanation LEFT keeps all customers even if no order.
 WITH customer_totals AS (SELECT customers.customer_name AS name, SUM(order_items.quantity * products.price) AS total_spent FROM customers JOIN orders ON customers.customer_id = orders.customer_id JOIN order_items ON orders.order_id = order_items.order_id JOIN products ON order_items.product_id = products.product_id GROUP BY customers.customer_name) SELECT * FROM customer_totals WHERE total_spent > (SELECT AVG(total_spent) FROM customer_totals);
